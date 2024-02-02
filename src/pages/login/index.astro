@@ -1,0 +1,29 @@
+---
+import LinkButton from "../../components/LinkButton.astro";
+import Base from "../../layouts/Base.astro";
+import Focus from "../../layouts/Focus.astro";
+
+if (Astro.locals.user) {
+    return Astro.redirect("/");
+}
+---
+
+<Base>
+    <Focus>
+        <h1 class="text-xl">Capture the web!</h1>
+        <p>
+            Connect your Github account to access batch captures, create
+            collections, and more.
+        </p>
+        <form>
+            <LinkButton to="/login/github">
+                <img
+                    src="/github-mark-white.svg"
+                    alt="Github"
+                    class="w-4 h-4 inline-block"
+                />
+                Sign in with Github
+            </LinkButton>
+        </form>
+    </Focus>
+</Base>

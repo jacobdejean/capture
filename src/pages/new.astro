@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import Focus from "../layouts/Focus.astro";
+import FileDrop from "../components/FileDrop.astro";
+import Button from "../components/Button.astro";
+import SingleLineInput from "../components/SingleLineInput.astro";
+
+const request = Astro.request;
+const host = new URL(request.url).host;
+
+if (request.method === "POST") {
+    const formData = await request.formData();
+    const url = formData.get("url");
+
+    console.log(host);
+    const res = await fetch(`http://${host}/api/capture`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url }),
+    }).then((res) => res.text());
+
+    console.log("imageUrl", res);
+}
+---
+
+<Base>
+    <Focus>
+        <h1>Capture the web!</h1>
+        <form method="post" class="w-full flex flex-col gap-4 items-start">
+            <SingleLineInput name="url" placeholder="Enter a url" />
+            <Button>Capture</Button>
+        </form>
+        <!-- <FileDrop /> -->
+    </Focus>
+</Base>
